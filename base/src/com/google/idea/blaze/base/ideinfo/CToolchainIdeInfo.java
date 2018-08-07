@@ -27,6 +27,7 @@ public class CToolchainIdeInfo implements Serializable {
   public final ImmutableList<String> baseCompilerOptions;
   public final ImmutableList<String> cCompilerOptions;
   public final ImmutableList<String> cppCompilerOptions;
+  public final ImmutableList<String> objcCompilerOptions;
   public final ImmutableList<ExecutionRootPath> builtInIncludeDirectories;
   public final ExecutionRootPath cppExecutable;
   public final String targetName;
@@ -38,6 +39,7 @@ public class CToolchainIdeInfo implements Serializable {
       ImmutableList<String> baseCompilerOptions,
       ImmutableList<String> cCompilerOptions,
       ImmutableList<String> cppCompilerOptions,
+      ImmutableList<String> objcCompilerOptions,
       ImmutableList<ExecutionRootPath> builtInIncludeDirectories,
       ExecutionRootPath cppExecutable,
       String targetName,
@@ -46,6 +48,7 @@ public class CToolchainIdeInfo implements Serializable {
     this.baseCompilerOptions = baseCompilerOptions;
     this.cCompilerOptions = cCompilerOptions;
     this.cppCompilerOptions = cppCompilerOptions;
+    this.objcCompilerOptions = objcCompilerOptions;
     this.builtInIncludeDirectories = builtInIncludeDirectories;
     this.cppExecutable = cppExecutable;
     this.targetName = targetName;
@@ -62,6 +65,7 @@ public class CToolchainIdeInfo implements Serializable {
     private final ImmutableList.Builder<String> baseCompilerOptions = ImmutableList.builder();
     private final ImmutableList.Builder<String> cCompilerOptions = ImmutableList.builder();
     private final ImmutableList.Builder<String> cppCompilerOptions = ImmutableList.builder();
+    private final ImmutableList.Builder<String> objcCompilerOptions = ImmutableList.builder();
 
     private final ImmutableList.Builder<ExecutionRootPath> builtInIncludeDirectories =
         ImmutableList.builder();
@@ -86,6 +90,11 @@ public class CToolchainIdeInfo implements Serializable {
 
     public Builder addCppCompilerOptions(Iterable<String> cppCompilerOptions) {
       this.cppCompilerOptions.addAll(cppCompilerOptions);
+      return this;
+    }
+
+    public Builder addObjcCompilerOptions(Iterable<String> objcCompilerOptions) {
+      this.objcCompilerOptions.addAll(objcCompilerOptions);
       return this;
     }
 
@@ -121,6 +130,7 @@ public class CToolchainIdeInfo implements Serializable {
           baseCompilerOptions.build(),
           cCompilerOptions.build(),
           cppCompilerOptions.build(),
+          objcCompilerOptions.build(),
           builtInIncludeDirectories.build(),
           cppExecutable,
           targetName,
@@ -141,6 +151,9 @@ public class CToolchainIdeInfo implements Serializable {
         + "\n"
         + "  cppCompilerOptions="
         + cppCompilerOptions
+        + "\n"
+        + "  objcCompilerOptions="
+        + objcCompilerOptions
         + "\n"
         + "  builtInIncludeDirectories="
         + builtInIncludeDirectories
@@ -174,6 +187,7 @@ public class CToolchainIdeInfo implements Serializable {
     return Objects.equal(baseCompilerOptions, that.baseCompilerOptions)
         && Objects.equal(cCompilerOptions, that.cCompilerOptions)
         && Objects.equal(cppCompilerOptions, that.cppCompilerOptions)
+        && Objects.equal(objcCompilerOptions, that.objcCompilerOptions)
         && Objects.equal(builtInIncludeDirectories, that.builtInIncludeDirectories)
         && Objects.equal(cppExecutable, that.cppExecutable)
         && Objects.equal(targetName, that.targetName)
@@ -187,6 +201,7 @@ public class CToolchainIdeInfo implements Serializable {
         baseCompilerOptions,
         cCompilerOptions,
         cppCompilerOptions,
+        objcCompilerOptions,
         builtInIncludeDirectories,
         cppExecutable,
         targetName,

@@ -38,6 +38,7 @@ final class BlazeResolveConfigurationData {
 
   final ImmutableList<HeadersSearchRoot> cLibraryIncludeRoots;
   final ImmutableList<HeadersSearchRoot> cppLibraryIncludeRoots;
+  final ImmutableList<HeadersSearchRoot> objcLibraryIncludeRoots;
   final ImmutableList<HeadersSearchRoot> projectIncludeRoots;
   final BlazeCompilerMacros compilerMacros;
   final CToolchainIdeInfo toolchainIdeInfo;
@@ -74,7 +75,9 @@ final class BlazeResolveConfigurationData {
         headerRoots,
         systemIncludesBuilder.build(),
         systemIncludesBuilder.build(),
+        systemIncludesBuilder.build(),
         userQuoteIncludesBuilder.build(),
+        userIncludesBuilder.build(),
         userIncludesBuilder.build(),
         userIncludesBuilder.build(),
         defines.build(),
@@ -90,9 +93,11 @@ final class BlazeResolveConfigurationData {
       ImmutableMap<File, VirtualFile> headerRoots,
       ImmutableCollection<ExecutionRootPath> cSystemIncludeDirs,
       ImmutableCollection<ExecutionRootPath> cppSystemIncludeDirs,
+      ImmutableCollection<ExecutionRootPath> objcSystemIncludeDirs,
       ImmutableCollection<ExecutionRootPath> quoteIncludeDirs,
       ImmutableCollection<ExecutionRootPath> cIncludeDirs,
       ImmutableCollection<ExecutionRootPath> cppIncludeDirs,
+      ImmutableCollection<ExecutionRootPath> objcIncludeDirs,
       ImmutableCollection<String> defines,
       ImmutableMap<String, String> features,
       BlazeCompilerSettings compilerSettings,
@@ -116,6 +121,13 @@ final class BlazeResolveConfigurationData {
         cppIncludeRootsBuilder, cppSystemIncludeDirs, false /* isUserHeader */);
     this.cppLibraryIncludeRoots = cppIncludeRootsBuilder.build();
 
+    ImmutableList.Builder<HeadersSearchRoot> objcIncludeRootsBuilder = ImmutableList.builder();
+    headerRootsCollector.collectHeaderRoots(
+        objcIncludeRootsBuilder, objcIncludeDirs, true /* isUserHeader */);
+    headerRootsCollector.collectHeaderRoots(
+        objcIncludeRootsBuilder, objcSystemIncludeDirs, false /* isUserHeader */);
+    this.objcLibraryIncludeRoots = objcIncludeRootsBuilder.build();
+
     ImmutableList.Builder<HeadersSearchRoot> quoteIncludeRootsBuilder = ImmutableList.builder();
     headerRootsCollector.collectHeaderRoots(
         quoteIncludeRootsBuilder, quoteIncludeDirs, true /* isUserHeader */);
@@ -137,6 +149,7 @@ final class BlazeResolveConfigurationData {
     BlazeResolveConfigurationData otherData = (BlazeResolveConfigurationData) other;
     return this.cLibraryIncludeRoots.equals(otherData.cLibraryIncludeRoots)
         && this.cppLibraryIncludeRoots.equals(otherData.cppLibraryIncludeRoots)
+        && this.objcLibraryIncludeRoots.equals(otherData.objcLibraryIncludeRoots)
         && this.projectIncludeRoots.equals(otherData.projectIncludeRoots)
         && this.compilerMacros.equals(otherData.compilerMacros)
         && this.toolchainIdeInfo.equals(otherData.toolchainIdeInfo)
@@ -150,6 +163,7 @@ final class BlazeResolveConfigurationData {
     return Objects.hash(
         cLibraryIncludeRoots,
         cppLibraryIncludeRoots,
+        objcLibraryIncludeRoots,
         projectIncludeRoots,
         compilerMacros,
         toolchainIdeInfo,

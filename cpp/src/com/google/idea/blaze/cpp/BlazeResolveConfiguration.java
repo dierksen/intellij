@@ -204,8 +204,10 @@ final class BlazeResolveConfiguration extends OCResolveConfigurationAdapter {
           ImmutableSet.Builder<HeadersSearchRoot> roots = ImmutableSet.builder();
           if (lang == OCLanguageKind.C) {
             roots.addAll(configurationData.cLibraryIncludeRoots);
-          } else {
+          } else if (lang == OCLanguageKind.CPP) {
             roots.addAll(configurationData.cppLibraryIncludeRoots);
+          } else {
+            roots.addAll(configurationData.objcLibraryIncludeRoots);
           }
           roots.addAll(
               getHeadersSearchRootFromCompilerInfo(

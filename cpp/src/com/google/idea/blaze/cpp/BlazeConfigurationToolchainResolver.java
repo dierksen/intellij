@@ -291,12 +291,19 @@ final class BlazeConfigurationToolchainResolver {
     cppFlagsBuilder.addAll(toolchainIdeInfo.baseCompilerOptions);
     cppFlagsBuilder.addAll(toolchainIdeInfo.cppCompilerOptions);
     cppFlagsBuilder.addAll(toolchainIdeInfo.unfilteredCompilerOptions);
+
+    ImmutableList.Builder<String> objcFlagsBuilder = ImmutableList.builder();
+    objcFlagsBuilder.addAll(toolchainIdeInfo.baseCompilerOptions);
+    objcFlagsBuilder.addAll(toolchainIdeInfo.objcCompilerOptions);
+    objcFlagsBuilder.addAll(toolchainIdeInfo.unfilteredCompilerOptions);
     return new BlazeCompilerSettings(
         project,
         compilerWrapper,
         compilerWrapper,
+        compilerWrapper,
         cFlagsBuilder.build(),
         cppFlagsBuilder.build(),
+        objcFlagsBuilder.build(),
         compilerVersion,
         compilerInfoCache);
   }

@@ -24,13 +24,16 @@ final class CFileExtensions {
   static final ImmutableSet<String> C_FILE_EXTENSIONS = ImmutableSet.of("c");
   static final ImmutableSet<String> CXX_FILE_EXTENSIONS =
       ImmutableSet.of("cc", "cpp", "cxx", "c++", "C");
+  static final ImmutableSet<String> OBJC_FILE_EXTENSIONS = ImmutableSet.of("m");
+  static final ImmutableSet<String> OBJCPP_FILE_EXTENSIONS = ImmutableSet.of("mm");
 
   static final ImmutableSet<String> CXX_ONLY_HEADER_EXTENSIONS =
       ImmutableSet.of("hh", "hpp", "hxx");
   private static final ImmutableSet<String> SHARED_HEADER_EXTENSIONS = ImmutableSet.of("h", "inc");
 
   static final ImmutableSet<String> SOURCE_EXTENSIONS =
-      ImmutableSet.<String>builder().addAll(C_FILE_EXTENSIONS).addAll(CXX_FILE_EXTENSIONS).build();
+      ImmutableSet.<String>builder().addAll(C_FILE_EXTENSIONS).addAll(CXX_FILE_EXTENSIONS)
+          .addAll(OBJC_FILE_EXTENSIONS).addAll(OBJCPP_FILE_EXTENSIONS).build();
   static final ImmutableSet<String> HEADER_EXTENSIONS =
       ImmutableSet.<String>builder()
           .addAll(SHARED_HEADER_EXTENSIONS)

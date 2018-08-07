@@ -66,7 +66,7 @@ public final class BlazeCWorkspace implements ProjectComponent {
   private final BlazeConfigurationResolver configurationResolver;
   private BlazeConfigurationResolverResult resolverResult;
   private ImmutableList<OCLanguageKind> supportedLanguages =
-      ImmutableList.of(OCLanguageKind.C, OCLanguageKind.CPP);
+      ImmutableList.of(OCLanguageKind.C, OCLanguageKind.CPP, OCLanguageKind.OBJ_C, OCLanguageKind.OBJ_CPP);
 
   private final Project project;
   private CidrToolEnvironment toolEnvironment = new CidrToolEnvironment();

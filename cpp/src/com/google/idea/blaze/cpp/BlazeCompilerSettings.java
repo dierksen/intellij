@@ -33,8 +33,10 @@ final class BlazeCompilerSettings extends OCCompilerSettingsAdapter {
   private final Project project;
   @Nullable private final File cCompiler;
   @Nullable private final File cppCompiler;
+  @Nullable private final File objcCompiler;
   private final CidrCompilerSwitches cCompilerSwitches;
   private final CidrCompilerSwitches cppCompilerSwitches;
+  private final CidrCompilerSwitches objcCompilerSwitches;
   private final String compilerVersion;
   private final CompilerInfoCacheAdapter compilerInfoCache;
 
@@ -42,25 +44,26 @@ final class BlazeCompilerSettings extends OCCompilerSettingsAdapter {
       Project project,
       @Nullable File cCompiler,
       @Nullable File cppCompiler,
+      @Nullable File objcCompiler,
       ImmutableList<String> cFlags,
       ImmutableList<String> cppFlags,
+      ImmutableList<String> objcFlags,
       String compilerVersion,
       CompilerInfoCacheAdapter compilerInfoCache) {
     this.project = project;
     this.cCompiler = cCompiler;
     this.cppCompiler = cppCompiler;
+    this.objcCompiler = objcCompiler;
     this.cCompilerSwitches = getCompilerSwitches(cFlags);
     this.cppCompilerSwitches = getCompilerSwitches(cppFlags);
+    this.objcCompilerSwitches = getCompilerSwitches(objcFlags);
     this.compilerVersion = compilerVersion;
     this.compilerInfoCache = compilerInfoCache;
   }
 
   @Override
   public OCCompilerKind getCompiler(OCLanguageKind languageKind) {
-    if (languageKind == OCLanguageKind.C || languageKind == OCLanguageKind.CPP) {
-      return OCCompilerKind.CLANG;
-    }
-    return OCCompilerKind.UNKNOWN;
+    return OCCompilerKind.CLANG;
   }
 
   @Override
@@ -69,8 +72,9 @@ final class BlazeCompilerSettings extends OCCompilerSettingsAdapter {
       return cCompiler;
     } else if (lang == OCLanguageKind.CPP) {
       return cppCompiler;
+    } else if (lang == OCLanguageKind.OBJ_C || lang == OCLanguageKind.OBJ_CPP) {
+      return objcCompiler;
     }
-    // We don't support objective c/c++.
     return null;
   }
 
@@ -86,6 +90,9 @@ final class BlazeCompilerSettings extends OCCompilerSettingsAdapter {
       return cCompilerSwitches;
     }
     if (lang == OCLanguageKind.CPP) {
+      return cppCompilerSwitches;
+    }
+    if (lang == OCLanguageKind.OBJ_C || lang == OCLanguageKind.OBJ_CPP) {
       return cppCompilerSwitches;
     }
     return new CidrSwitchBuilder().build();

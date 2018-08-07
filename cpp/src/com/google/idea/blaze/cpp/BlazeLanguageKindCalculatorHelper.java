@@ -44,6 +44,12 @@ final class BlazeLanguageKindCalculatorHelper implements OCLanguageKindCalculato
       if (CFileExtensions.CXX_ONLY_HEADER_EXTENSIONS.contains(extension)) {
         return OCLanguageKind.CPP;
       }
+      if (CFileExtensions.OBJC_FILE_EXTENSIONS.contains(extension)) {
+        return OCLanguageKind.OBJ_C;
+      }
+      if (CFileExtensions.OBJCPP_FILE_EXTENSIONS.contains(extension)) {
+        return OCLanguageKind.OBJ_CPP;
+      }
     }
     return null;
   }

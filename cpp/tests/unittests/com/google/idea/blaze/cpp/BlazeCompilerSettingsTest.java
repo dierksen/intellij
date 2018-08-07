@@ -49,6 +49,8 @@ public class BlazeCompilerSettingsTest extends BlazeTestCase {
             getProject(),
             cppExe,
             cppExe,
+            cppExe,
+            cFlags,
             cFlags,
             cFlags,
             "cc version (trunk r123456)",
