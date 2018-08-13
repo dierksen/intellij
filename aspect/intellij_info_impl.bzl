@@ -264,6 +264,35 @@ def collect_go_info(target, ctx, semantics, ide_info, ide_info_file, output_grou
     update_set_in_dict(output_groups, "intellij-resolve-go", depset(generated))
     return True
 
+def collect_objc_info(target, ctx, semantics, ide_info, ide_info_file, output_groups):
+    if not hasattr(target, "objc"):
+        return False
+
+    sources = artifacts_from_target_list_attr(ctx, "srcs")
+    headers = artifacts_from_target_list_attr(ctx, "hdrs")
+    non_arc_sources = artifacts_from_target_list_attr(ctx, "non_arc_srcs")
+
+    target_includes = []
+    if hasattr(ctx.rule.attr, "includes"):
+        target_includes = ctx.rule.attr.includes
+    target_defines = []
+    if hasattr(ctx.rule.attr, "defines"):
+        target_defines = ctx.rule.attr.defines
+    target_copts = []
+    if hasattr(ctx.rule.attr, "copts"):
+        target_copts += ctx.rule.attr.copts
+
+    objc_provider = target.objc
+
+    objc_info = struct_omit_none(
+        source = sources,
+        header = headers,
+        target_include = target_includes,
+        target_define = target_defines,
+        target_copt = target_copts,
+    )
+    ide_info["objc_ide_info"] = objc_info
+
 def collect_cpp_info(target, ctx, semantics, ide_info, ide_info_file, output_groups):
     """Updates C++-specific output groups, returns false if not a C++ target."""
     if not hasattr(target, "cc"):

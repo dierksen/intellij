@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 /** Language classes. */
 public enum LanguageClass {
   GENERIC("generic", ImmutableSet.of()),
-  C("c", ImmutableSet.of("c", "cc", "cpp", "h", "hh", "hpp")),
+  C("c", ImmutableSet.of("c", "cc", "cpp", "h", "hh", "hpp", "m", "mm")),
   JAVA("java", ImmutableSet.of("java")),
   ANDROID("android", ImmutableSet.of("aidl")),
   JAVASCRIPT("javascript", ImmutableSet.of("js", "applejs")),
