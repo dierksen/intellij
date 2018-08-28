@@ -290,8 +290,19 @@ def collect_objc_info(target, ctx, semantics, ide_info, ide_info_file, output_gr
         target_include = target_includes,
         target_define = target_defines,
         target_copt = target_copts,
+        transitive_define = objc_provider.define.to_list(),
+        transitive_include_directory = objc_provider.include,
     )
     ide_info["objc_ide_info"] = objc_info
+
+    old_compile_files = target.output_group("files_to_compile_INTERNAL_")
+    compile_files = target.output_group("compilation_outputs")
+    compile_files = depset(generated, transitive = [compile_files, old_compile_files])
+
+    update_set_in_dict(output_groups, "intellij-info-objc", depset([ide_info_file]))
+    update_set_in_dict(output_groups, "intellij-compile-objc", compile_files)
+    update_set_in_dict(output_groups, "intellij-resolve-objc", objc_provider.transitive_headers)
+    return True
 
 def collect_cpp_info(target, ctx, semantics, ide_info, ide_info_file, output_groups):
     """Updates C++-specific output groups, returns false if not a C++ target."""
