@@ -746,6 +746,7 @@ def intellij_info_aspect_impl(target, ctx, semantics):
     handled = collect_py_info(target, ctx, ide_info, ide_info_file, output_groups) or handled
     handled = collect_cpp_info(target, ctx, semantics, ide_info, ide_info_file, output_groups) or handled
     handled = collect_c_toolchain_info(target, ctx, semantics, ide_info, ide_info_file, output_groups) or handled
+    handled = collect_objc_info(target, ctx, semantics, ide_info, ide_info_file, output_groups) or handled
     handled = collect_go_info(target, ctx, semantics, ide_info, ide_info_file, output_groups) or handled
     handled = collect_java_info(target, ctx, semantics, ide_info, ide_info_file, output_groups) or handled
     handled = collect_java_toolchain_info(target, ide_info, ide_info_file, output_groups) or handled
