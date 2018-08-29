@@ -11,6 +11,8 @@ java_library(
         "intellij-2018.1": ["@go_2018_1//:go"],
         "intellij-2018.2": ["@go_2018_2//:go"],
         "intellij-ue-2018.1": ["@go_2018_1//:go"],
+        "intellij-2018.2": ["@go_2018_2//:go"],
+        "intellij-ue-2018.2": ["@go_2018_2//:go"],
         "default": [],
     }),
 )
